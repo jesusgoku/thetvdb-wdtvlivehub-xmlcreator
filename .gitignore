@@ -1,0 +1,9 @@
+vendor/*
+cache/twig/*
+cache/images/*
+cache/thetvdb/*
+downloaded/*
+config.php
+.DS_Store
+composer.lock
+*.zip

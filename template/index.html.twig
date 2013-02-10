@@ -1,0 +1,16 @@
+{% extends 'layout.html.twig' %}
+
+{% block content %}
+<form id="form-search" class="form-search">
+	<input type="text" placeholder="Buscar serie...">
+	<button type="submit" class="btn btn-primary"><i class="icon-search icon-white"></i> Buscar</button>
+</form>
+
+<div id="list-search"></div>
+{% endblock %}
+
+{% block javascript %}
+{{ parent() }}
+{% include 'index-tmpl.html.twig' %}
+<script type="text/javascript" src="js/index.js"></script>
+{% endblock %}

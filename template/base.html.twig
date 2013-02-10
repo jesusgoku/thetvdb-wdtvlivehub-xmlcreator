@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta charset="utf-8">
+	<title>{% block title 'The TV DB API' %}</title>
+	{% block stylesheet %}
+	<link rel="stylesheet" href="libraries/notify-0.1/notify.css">
+	<link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/bootswatch/2.1.1/united/bootstrap.min.css">
+	{% endblock %}
+</head>
+<body>
+{% block body '' %}
+{% block javascript %}
+<script type="text/javascript" src="//code.jquery.com/jquery-1.9.0.min.js"></script>
+<script type="text/javascript" src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.4/underscore-min.js"></script>
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.0.rc.2/handlebars.min.js"></script>
+<script type="text/javascript" src="libraries/notify-0.1/notify.js"></script>
+<script type="text/javascript">
+	Handlebars.registerHelper('addzero', function(num) {
+		return num < 10 ? '0' + num : num;
+	});
+</script>
+{% endblock %}
+</body>
+</html>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<details>
+	<id>{{ id }}</id>
+	<title>{{ SeriesName }} S{{ SeasonNumber|addzero }}E{{ EpisodeNumber|addzero }} - {{ EpisodeName }}</title>
+	<series_name>{{ SeriesName }}</series_name>
+	<episode_name>{{ EpisodeName }}</episode_name>
+	<season_number>{{ SeasonNumber }}</season_number>
+	<episode_number>{{ EpisodeNumber }}</episode_number>
+	<firstaired>{{ FirstAired }}</firstaired>
+	<genre>{{ Genre }}</genre>
+	<runtime>{{ Runtime }}</runtime>
+	<director>{{ Director is not empty ? Director : '' }}</director>
+	<actor>{{ Actors }}</actor>
+	<overview>{{ Overview is not empty ? Overview : '' }}</overview>
+</details>
