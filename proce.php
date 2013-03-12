@@ -168,7 +168,7 @@ switch( $accion )
 				else
 				{
 					file_put_contents( $xml_file, $twig->render('episodewd.xml.twig', $item) );
-					$zip->addFile($xml_file, $base_file . '.xml');
+					if( isset($zip) ) $zip->addFile($xml_file, $base_file . '.xml');
 				}
 				/* ---- DESCARGO BANNER ------------------------- */
 				if( !empty( $banner ) && !file_exists( $cache_banner ) )
