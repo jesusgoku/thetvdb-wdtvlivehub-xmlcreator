@@ -31,7 +31,7 @@ function tvdb_search( $q )
 {
 	$api_url_search = $GLOBALS['api_url_search'];
 	$q = urlencode( $q );
-	$cache_file = 'cache/thetvdb/' . $q . '.json';
+	$cache_file = __DIR__ . '/cache/thetvdb/' . $q . '.json';
 	if( file_exists( $cache_file ) )
 	{
 		$xml = json_decode( file_get_contents( $cache_file ) );
@@ -39,6 +39,9 @@ function tvdb_search( $q )
 	else
 	{
 		$xml = simplexml_load_file( $api_url_search . $q );
+		if (!file_exists(dirname($cache_file))) {
+			mkdir(dirname($cache_file), 0777, true);
+		}
 		file_put_contents($cache_file, json_encode($xml));
 	}
 
