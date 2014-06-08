@@ -51,7 +51,7 @@ function tvdb_search( $q )
 function tvdb_serieall( $seriesid, $language = 'es' )
 {
 	$api_url_all = $GLOBALS['api_url_all'];
-	$cache_file_all = 'cache/thetvdb/' . $seriesid . '-all-' . $language . '.json';
+	$cache_file_all = __DIR__ . '/cache/thetvdb/' . $seriesid . '-all-' . $language . '.json';
 	if( file_exists( $cache_file_all ) )
 	{
 		$xmlall = json_decode( file_get_contents( $cache_file_all ) );
@@ -59,6 +59,9 @@ function tvdb_serieall( $seriesid, $language = 'es' )
 	else
 	{
 		$xmlall = simplexml_load_file( sprintf($api_url_all, $seriesid, $language) );
+        if (!file_exists(dirname($cache_file_all))) {
+            mkdir(dirname($cache_file_all, 0777, true));
+        }
 		file_put_contents( $cache_file_all, json_encode( $xmlall ) );
 	}
 
@@ -68,7 +71,7 @@ function tvdb_serieall( $seriesid, $language = 'es' )
 function tvdb_banners( $seriesid )
 {
 	$api_url_banners = $GLOBALS['api_url_banners'];
-	$cache_file_banners = 'cache/thetvdb/' . $seriesid . '-banners.json';
+	$cache_file_banners = __DIR__ . '/cache/thetvdb/' . $seriesid . '-banners.json';
 	if( file_exists( $cache_file_banners ) )
 	{
 		$xmlbanners = json_decode( file_get_contents( $cache_file_banners ) );
@@ -76,6 +79,9 @@ function tvdb_banners( $seriesid )
 	else
 	{
 		$xmlbanners = simplexml_load_file( sprintf($api_url_banners, $seriesid) );
+        if (!file_exists(dirname($cache_file_banners))) {
+            mkdir(dirname($cache_file_banners, 0777, true));
+        }
 		file_put_contents( $cache_file_banners, json_encode( $xmlbanners ) );
 	}
 
@@ -127,7 +133,7 @@ switch( $accion )
 		if( !$only )
 		{
 			$zip = new ZipArchive();
-			$zip->open('cache/temp.zip', ZIPARCHIVE::OVERWRITE);
+			$zip->open(__DIR__ . '/cache/temp.zip', ZIPARCHIVE::OVERWRITE);
 		}
 
 		foreach( $xml['Episode'] as $item )
@@ -149,14 +155,14 @@ switch( $accion )
 				}
 				
 				$base_season = parseFolderName($item['SeriesName']) . ' - Season ' . addzero($item['SeasonNumber']);
-				$folder_serie = 'downloaded/' . parseFolderName($item['SeriesName']) . '/';
+				$folder_serie = __DIR__ . '/downloaded/' . parseFolderName($item['SeriesName']) . '/';
 				$folder_season = $folder_serie . 'Season ' . addzero($item['SeasonNumber']) . '/';
 				$base_folder = $folder_season;
 				$base_file = parseName($item['SeriesName']) . '.S' . addzero($item['SeasonNumber']) . 'E' . addzero($item['EpisodeNumber']) . '.' . parseName($item['EpisodeName']);
 				$base_path = $base_folder . $base_file;
 				$xml_file = $base_path . '.xml';
 				$thumb_file = $base_path . '.metathumb';
-				$cache_banner = 'cache/images/' . basename( $banner['BannerPath'] );
+				$cache_banner = __DIR__ . '/cache/images/' . basename( $banner['BannerPath'] );
 				/* ---- VERIFICO Y/O CREO FOLDER ----------------- */
 				if( ! file_exists( $folder_serie ) ) mkdir($folder_serie);
 				if( ! file_exists( $folder_season ) ) mkdir($folder_season);
@@ -176,6 +182,9 @@ switch( $accion )
 				/* ---- DESCARGO BANNER ------------------------- */
 				if( !empty( $banner ) && !file_exists( $cache_banner ) )
 				{
+                    if (!file_exists(dirname($cache_banner))) {
+                        mkdir(dirname($cache_banner), 0777, true);
+                    }
 					file_put_contents( $cache_banner, file_get_contents( $api_url_banners_base . $banner['BannerPath'] ) );
 				}
 
@@ -207,7 +216,7 @@ switch( $accion )
 
 			header('Content-type: application/zip');
 			header('Content-disposition: attachment; filename=' . ($season ? $base_season : $base_file) . '.zip');
-			readfile('cache/temp.zip');
+			readfile(__DIR__ . '/cache/temp.zip');
 			exit;
 		}
 		break;
