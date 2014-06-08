@@ -29,10 +29,13 @@ function parseFolderName( $name )
 
 function tvdb_search( $q )
 {
+    $cache_days = $GLOBALS['cache_days'];
 	$api_url_search = $GLOBALS['api_url_search'];
 	$q = urlencode( $q );
 	$cache_file = __DIR__ . '/cache/thetvdb/' . $q . '.json';
-	if( file_exists( $cache_file ) )
+    $now = new DateTime();
+	if( file_exists( $cache_file )
+        && $cache_days > $now->diff(new DateTime( '@' . filemtime($cache_file) ) )->format('%a') )
 	{
 		$xml = json_decode( file_get_contents( $cache_file ) );
 	}
@@ -50,9 +53,12 @@ function tvdb_search( $q )
 
 function tvdb_serieall( $seriesid, $language = 'es' )
 {
+    $cache_days = $GLOBALS['cache_days'];
 	$api_url_all = $GLOBALS['api_url_all'];
 	$cache_file_all = __DIR__ . '/cache/thetvdb/' . $seriesid . '-all-' . $language . '.json';
-	if( file_exists( $cache_file_all ) )
+    $now = new DateTime();
+	if( file_exists( $cache_file_all )
+        && $cache_days > $now->diff(new DateTime( '@' . filemtime($cache_file_all) ) )->format('%a') )
 	{
 		$xmlall = json_decode( file_get_contents( $cache_file_all ) );
 	}
@@ -70,9 +76,12 @@ function tvdb_serieall( $seriesid, $language = 'es' )
 
 function tvdb_banners( $seriesid )
 {
+    $cache_days = $GLOBALS['cache_days'];
 	$api_url_banners = $GLOBALS['api_url_banners'];
 	$cache_file_banners = __DIR__ . '/cache/thetvdb/' . $seriesid . '-banners.json';
-	if( file_exists( $cache_file_banners ) )
+    $now = new DateTime();
+	if( file_exists( $cache_file_banners )
+        && $cache_days > $now->diff(new DateTime( '@' . filemtime($cache_file_banners) ) )->format('%a') )
 	{
 		$xmlbanners = json_decode( file_get_contents( $cache_file_banners ) );
 	}
