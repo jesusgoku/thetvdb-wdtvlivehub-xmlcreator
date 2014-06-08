@@ -51,7 +51,7 @@ if( $dp = opendir( $ruta ) )
 					$answer = question_yn( $file_destine . ' -> Renombrar?' );
 					if( $answer == 'y' )
 					{
-						if( rename($ruta . $item, $ruta . $file_destine) )
+						if( rename($ruta . '/' . $item, $ruta . '/' . $file_destine) )
 						{
 							echo 'Renombado a: ' . $file_destine . "\n";
 						}
