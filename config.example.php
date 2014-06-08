@@ -8,6 +8,8 @@ $api_url_serie = $api_url . $api_key . '/series/%s/%s.xml';
 $api_url_all = $api_url . $api_key . '/series/%s/all/%s.xml';
 $api_url_banners = $api_url . $api_key . '/series/%s/banners.xml';
 
+$cache_days = 1;
+
 $search_saved = array();
 
 $search_saved_anime = array();
